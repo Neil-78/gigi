@@ -8,10 +8,10 @@
     <style>
         /* GALAXY AXOLOTL PALETTE */
         :root {
-            --bg-deep-black: #050509; /* Deep galaxy black */
-            --bg-space-dust: #0c001a; /* Dark violet haze */
-            --accent-pink-neon: #ff66b3; /* Axolotl Pink */
-            --accent-purple-neon: #b366ff; /* Nebulae Purple */
+            --bg-deep-black: #050509; 
+            --bg-space-dust: #0c001a; 
+            --accent-pink-neon: #ff66b3; 
+            --accent-purple-neon: #b366ff; 
             --text-silver: #e0e0e0;
             --text-pure-white: #ffffff;
             --font-main: 'Poppins', sans-serif;
@@ -23,7 +23,6 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            cursor: none; /* Oculta el cursor para una experiencia más inmersiva */
         }
 
         body {
@@ -34,6 +33,11 @@
             scroll-behavior: smooth;
         }
 
+        /* Ocultar cursor normal solo en PC */
+        @media (pointer: fine) {
+            * { cursor: none; }
+        }
+
         /* GALAXY BACKGROUND ANIMATION */
         body::before {
             content: '';
@@ -42,7 +46,7 @@
             background: 
                 radial-gradient(circle at 20% 30%, rgba(179, 102, 255, 0.15) 0%, transparent 50%),
                 radial-gradient(circle at 80% 70%, rgba(255, 102, 179, 0.1) 0%, transparent 50%),
-                url('https://www.transparenttextures.com/patterns/stardust.png'); /* Fondo de estrellas sutil */
+                url('https://www.transparenttextures.com/patterns/stardust.png'); 
             opacity: 0.6;
             z-index: -1;
             animation: galaxyShift 60s linear infinite alternate;
@@ -53,18 +57,24 @@
             100% { transform: translate(-2%, -3%) scale(1.05); }
         }
 
-        /* custom cursor */
+        /* custom cursor (optimizado) */
         .cursor-trail {
             position: fixed;
+            top: 0; left: 0;
             width: 10px;
             height: 10px;
             background: var(--accent-pink-neon);
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
-            transform: translate(-50%, -50%);
             mix-blend-mode: screen;
-            transition: width 0.2s, height 0.2s;
+            will-change: transform; /* Ayuda a que la tarjeta gráfica lo procese más rápido */
+            display: none; /* Oculto por defecto */
+        }
+
+        /* Mostrar cursor solo en PC */
+        @media (pointer: fine) {
+            .cursor-trail { display: block; }
         }
 
         /* INTRO ANIMATION & HEADER */
@@ -78,7 +88,7 @@
         }
 
         .axolotl-logo {
-            width: 150px; /* Tamaño inicial grande */
+            width: 150px; 
             height: auto;
             image-rendering: crisp-edges;
             animation: axolotlIntro 2s ease-out forwards;
@@ -89,7 +99,7 @@
             font-family: var(--font-script);
             font-size: 2rem;
             color: var(--text-pure-white);
-            margin-left: -50px; /* Ajuste inicial */
+            margin-left: -50px; 
             opacity: 0;
             text-shadow: 0 0 10px var(--accent-purple-neon), 0 0 20px rgba(179, 102, 255, 0.5);
             animation: titleFadeIn 1s ease-out 1.5s forwards;
@@ -99,7 +109,7 @@
         @keyframes axolotlIntro {
             0% { transform: scale(3) translate(50vw, 30vh); opacity: 0; }
             50% { opacity: 1; }
-            100% { transform: scale(0.3) translate(0, 0); width: 80px; } /* Se aleja y se coloca a la izquierda */
+            100% { transform: scale(0.3) translate(0, 0); width: 80px; } 
         }
 
         @keyframes titleFadeIn {
@@ -109,11 +119,11 @@
         /* MAIN CONTENT AREA */
         .letter-content {
             max-width: 900px;
-            margin: 150px auto; /* Deja espacio para el header fijo */
-            padding: 0 20px;
+            margin: 150px auto; 
+            padding: 0 20px 100px 20px; /* Un poco de margen abajo para que no corte el último video */
             display: flex;
             flex-direction: column;
-            gap: 60px; /* Espacio grande entre elementos */
+            gap: 60px; 
         }
 
         /* STYLES FOR LETTER SECTIONS (Text & Video) */
@@ -123,7 +133,8 @@
             gap: 20px;
             opacity: 0;
             transform: translateY(40px);
-            transition: opacity 1s, transform 1s;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform; /* Optimización de rendimiento */
         }
 
         .letter-section.visible {
@@ -175,7 +186,8 @@
 
         .video-block iframe {
             width: 100%;
-            aspect-ratio: 16 / 9; /* Mantiene la proporción del video */
+            height: 100%;
+            aspect-ratio: 16 / 9; 
             border: none;
             display: block;
         }
@@ -211,7 +223,7 @@
 
         <section class="letter-section">
             <div class="video-block">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/WP_jITzqB7M?si=5LraxFU44EXpMG3e" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/WP_jITzqB7M?si=5LraxFU44EXpMG3e" title="YouTube video player" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -223,7 +235,7 @@
 
         <section class="letter-section">
             <div class="video-block">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/WqKqj3Q1wrw?si=JBDIkt9C0k4pTpoh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/WqKqj3Q1wrw?si=JBDIkt9C0k4pTpoh" title="YouTube video player" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -235,7 +247,7 @@
 
         <section class="letter-section">
             <div class="video-block">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/RR7mOicpAe4?si=OcS8WY3edSR1x-cz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/RR7mOicpAe4?si=OcS8WY3edSR1x-cz" title="YouTube video player" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -247,7 +259,7 @@
 
         <section class="letter-section">
             <div class="video-block">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/7JNQUsVegcY?si=BABTtRbYEM_ZFMKa" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/7JNQUsVegcY?si=BABTtRbYEM_ZFMKa" title="YouTube video player" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -259,7 +271,7 @@
 
         <section class="letter-section">
             <div class="video-block">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/ZU45FAshhwg?si=RGoxXEnyiTe7LO5t" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/ZU45FAshhwg?si=RGoxXEnyiTe7LO5t" title="YouTube video player" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -271,7 +283,7 @@
 
         <section class="letter-section">
             <div class="video-block">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/iUASF5h5G1w?si=Pp7QYHqwbh-cErCG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/iUASF5h5G1w?si=Pp7QYHqwbh-cErCG" title="YouTube video player" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -283,7 +295,7 @@
 
         <section class="letter-section">
             <div class="video-block">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/F4i3O7T488I?si=Exh1InSXa80OWr7s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/F4i3O7T488I?si=Exh1InSXa80OWr7s" title="YouTube video player" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -295,7 +307,7 @@
 
         <section class="letter-section">
             <div class="video-block">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/-GHvDpMZB3I?si=o7ojT6QaxaEK7sgy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/-GHvDpMZB3I?si=o7ojT6QaxaEK7sgy" title="YouTube video player" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -307,7 +319,7 @@
 
         <section class="letter-section">
             <div class="video-block">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/qk-iLHtabpg?si=mnZlmKcqAhjzI4LR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/qk-iLHtabpg?si=mnZlmKcqAhjzI4LR" title="YouTube video player" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -319,7 +331,7 @@
 
         <section class="letter-section">
             <div class="video-block">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/LrS7nLEVES8?si=JFNkpQkOGBrfH4nB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/LrS7nLEVES8?si=JFNkpQkOGBrfH4nB" title="YouTube video player" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -331,7 +343,7 @@
 
         <section class="letter-section">
             <div class="video-block">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/86EzBBQwloo?si=m2KmQH_AbAcdchnc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/86EzBBQwloo?si=m2KmQH_AbAcdchnc" title="YouTube video player" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -343,7 +355,7 @@
 
         <section class="letter-section">
             <div class="video-block">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/AJTEcfWZx-U?si=-nVwMS0cVm8KCmv1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/AJTEcfWZx-U?si=-nVwMS0cVm8KCmv1" title="YouTube video player" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -355,7 +367,7 @@
 
         <section class="letter-section">
             <div class="video-block">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/5q-nZg1D_Ik?si=0LVu_wEDbnRh0B0y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/5q-nZg1D_Ik?si=0LVu_wEDbnRh0B0y" title="YouTube video player" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -367,7 +379,7 @@
 
         <section class="letter-section">
             <div class="video-block">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/be-sT9W0i2A?si=srC39Vh9ix_nm_X3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/be-sT9W0i2A?si=srC39Vh9ix_nm_X3" title="YouTube video player" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -379,7 +391,7 @@
 
         <section class="letter-section">
             <div class="video-block">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/A-95gA5RZaU?si=m67xXvx0fO2-HfcW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/A-95gA5RZaU?si=m67xXvx0fO2-HfcW" title="YouTube video player" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -391,7 +403,7 @@
 
         <section class="letter-section">
             <div class="video-block">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/etWdAXYy2Gc?si=YiYspUxXdrAnYFdz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/etWdAXYy2Gc?si=YiYspUxXdrAnYFdz" title="YouTube video player" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -403,7 +415,7 @@
 
         <section class="letter-section">
             <div class="video-block">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/pq85VSFhi0c?si=DnmKm8wkoe4OaBak" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/pq85VSFhi0c?si=DnmKm8wkoe4OaBak" title="YouTube video player" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -415,7 +427,7 @@
 
         <section class="letter-section">
             <div class="video-block">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/GG_xNkiuWrU?si=oQ8Deb4KoB9e54PI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/GG_xNkiuWrU?si=oQ8Deb4KoB9e54PI" title="YouTube video player" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -427,7 +439,7 @@
 
         <section class="letter-section">
             <div class="video-block">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/ZJoznujj3Lk?si=teadR4Z9TfoxLPNL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/ZJoznujj3Lk?si=teadR4Z9TfoxLPNL" title="YouTube video player" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -439,7 +451,7 @@
 
         <section class="letter-section">
             <div class="video-block">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/tGKCkLYIDdo?si=oh7QxJ8J5TSXIP6o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/tGKCkLYIDdo?si=oh7QxJ8J5TSXIP6o" title="YouTube video player" loading="lazy" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -449,17 +461,32 @@
         const cursor = document.getElementById('cursor');
         const sections = document.querySelectorAll('.letter-section');
 
-        // custom cursor trail effect
+        // Optimización del cursor: usar requestAnimationFrame para no trabar la página
+        let mouseX = 0;
+        let mouseY = 0;
+
         document.addEventListener('mousemove', e => {
-            cursor.style.top = e.clientY + 'px';
-            cursor.style.left = e.clientX + 'px';
+            mouseX = e.clientX;
+            mouseY = e.clientY;
         });
 
-        // Intersection Observer for scroll animation (blocks fade in)
+        function animateCursor() {
+            cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+            requestAnimationFrame(animateCursor);
+        }
+        
+        // Iniciar solo si no es un dispositivo móvil (pantalla táctil)
+        if (window.matchMedia("(pointer: fine)").matches) {
+            animateCursor();
+        }
+
+        // Intersection Observer for scroll animation
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
+                    // Opcional: dejar de observar una vez que ya apareció
+                    observer.unobserve(entry.target);
                 }
             });
         }, { threshold: 0.1 });
