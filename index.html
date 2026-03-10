@@ -3,214 +3,470 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Para Gigi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>Una carta de un amor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* Paleta y animaciones modernas */
+        /* GALAXY AXOLOTL PALETTE */
         :root {
-            --bg-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            --glass-bg: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --text-color: #f4f4f9;
+            --bg-deep-black: #050509; /* Deep galaxy black */
+            --bg-space-dust: #0c001a; /* Dark violet haze */
+            --accent-pink-neon: #ff66b3; /* Axolotl Pink */
+            --accent-purple-neon: #b366ff; /* Nebulae Purple */
+            --text-silver: #e0e0e0;
+            --text-pure-white: #ffffff;
+            --font-main: 'Poppins', sans-serif;
+            --font-script: 'Dancing Script', cursive;
         }
 
+        /* RESET & BASE STYLES */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            cursor: none; /* Oculta el cursor para una experiencia más inmersiva */
         }
 
         body {
-            background: var(--bg-gradient);
-            background-attachment: fixed;
-            color: var(--text-color);
-            font-family: 'Inter', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px 20px;
+            background: var(--bg-deep-black);
+            color: var(--text-silver);
+            font-family: var(--font-main);
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
-        /* Contenedor principal adaptado para móviles */
-        .letter-timeline {
-            width: 100%;
-            max-width: 450px; /* Perfecto para vista móvil */
+        /* GALAXY BACKGROUND ANIMATION */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(179, 102, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255, 102, 179, 0.1) 0%, transparent 50%),
+                url('https://www.transparenttextures.com/patterns/stardust.png'); /* Fondo de estrellas sutil */
+            opacity: 0.6;
+            z-index: -1;
+            animation: galaxyShift 60s linear infinite alternate;
+        }
+
+        @keyframes galaxyShift {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-2%, -3%) scale(1.05); }
+        }
+
+        /* custom cursor */
+        .cursor-trail {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--accent-pink-neon);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: screen;
+            transition: width 0.2s, height 0.2s;
+        }
+
+        /* INTRO ANIMATION & HEADER */
+        .header-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .axolotl-logo {
+            width: 150px; /* Tamaño inicial grande */
+            height: auto;
+            image-rendering: crisp-edges;
+            animation: axolotlIntro 2s ease-out forwards;
+            filter: drop-shadow(0 0 10px var(--accent-pink-neon));
+        }
+
+        .header-title {
+            font-family: var(--font-script);
+            font-size: 2rem;
+            color: var(--text-pure-white);
+            margin-left: -50px; /* Ajuste inicial */
+            opacity: 0;
+            text-shadow: 0 0 10px var(--accent-purple-neon), 0 0 20px rgba(179, 102, 255, 0.5);
+            animation: titleFadeIn 1s ease-out 1.5s forwards;
+            white-space: nowrap;
+        }
+
+        @keyframes axolotlIntro {
+            0% { transform: scale(3) translate(50vw, 30vh); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: scale(0.3) translate(0, 0); width: 80px; } /* Se aleja y se coloca a la izquierda */
+        }
+
+        @keyframes titleFadeIn {
+            to { opacity: 1; margin-left: 20px; }
+        }
+
+        /* MAIN CONTENT AREA */
+        .letter-content {
+            max-width: 900px;
+            margin: 150px auto; /* Deja espacio para el header fijo */
+            padding: 0 20px;
             display: flex;
             flex-direction: column;
-            gap: 25px;
+            gap: 60px; /* Espacio grande entre elementos */
         }
 
-        /* Estilo de los bloques de texto (Efecto Cristal) */
-        .text-bubble {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 20px 25px;
-            font-size: 1.1rem;
-            font-weight: 300;
-            line-height: 1.5;
-            text-align: left;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            /* Animación de entrada */
+        /* STYLES FOR LETTER SECTIONS (Text & Video) */
+        .letter-section {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
             opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 0.8s ease forwards;
+            transform: translateY(40px);
+            transition: opacity 1s, transform 1s;
         }
 
-        /* Estilo de los espacios para las canciones */
-        .song-space {
-            width: 100%;
+        .letter-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .text-block {
+            background: rgba(12, 0, 26, 0.6);
+            border: 1px solid rgba(179, 102, 255, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            font-weight: 300;
+            line-height: 1.8;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .text-block:hover {
+            border-color: rgba(255, 102, 179, 0.4);
+            box-shadow: 0 0 20px rgba(255, 102, 179, 0.2);
+        }
+
+        /* Axolotl footprint detail */
+        .text-block::after {
+            content: '🐾';
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-size: 1.2rem;
+            opacity: 0.3;
+            color: var(--accent-pink-neon);
+        }
+
+        .video-block {
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            /* Animación de entrada */
-            opacity: 0;
-            transform: scale(0.95);
-            animation: popIn 0.8s ease forwards;
+            background: #000;
+            border: 2px solid #1a1a1a;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+            transition: transform 0.3s, border-color 0.3s;
         }
 
-        /* Asegura que cualquier iframe que pegues se adapte al 100% del contenedor */
-        .song-space iframe {
+        .video-block:hover {
+            transform: scale(1.02);
+            border-color: var(--accent-purple-neon);
+        }
+
+        .video-block iframe {
             width: 100%;
-            height: 180px; /* Altura ideal para reproductores en móvil */
+            aspect-ratio: 16 / 9; /* Mantiene la proporción del video */
             border: none;
             display: block;
         }
 
-        /* --- KEYFRAMES PARA ANIMACIONES --- */
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
+        /* MÓVIL OPTIMIZATION */
+        @media (max-width: 768px) {
+            .header-container { flex-direction: column; left: 10px; }
+            @keyframes axolotlIntro {
+                100% { transform: scale(0.25) translate(0, 0); width: 60px; }
             }
+            .header-title { font-size: 1.3rem; margin-top: -10px; text-align: center; }
+            .letter-content { margin-top: 200px; gap: 40px; }
+            .text-block { padding: 20px; font-size: 1rem; }
         }
-
-        @keyframes popIn {
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        /* Retrasos escalonados para que los elementos aparezcan uno por uno suavemente */
-        .delay-1 { animation-delay: 0.2s; }
-        .delay-2 { animation-delay: 0.4s; }
-        .delay-3 { animation-delay: 0.6s; }
-        .delay-4 { animation-delay: 0.8s; }
-        .delay-5 { animation-delay: 1.0s; }
-        .delay-6 { animation-delay: 1.2s; }
-        .delay-7 { animation-delay: 1.4s; }
-        .delay-8 { animation-delay: 1.6s; }
-        .delay-9 { animation-delay: 1.8s; }
-        .delay-10 { animation-delay: 2.0s; }
-        .delay-11 { animation-delay: 2.2s; }
-        .delay-12 { animation-delay: 2.4s; }
-        .delay-13 { animation-delay: 2.6s; }
-        .delay-14 { animation-delay: 2.8s; }
-        .delay-15 { animation-delay: 3.0s; }
-        .delay-16 { animation-delay: 3.2s; }
-        .delay-17 { animation-delay: 3.4s; }
-        .delay-18 { animation-delay: 3.6s; }
-        .delay-19 { animation-delay: 3.8s; }
-        .delay-20 { animation-delay: 4.0s; }
-        .delay-21 { animation-delay: 4.2s; }
-        .delay-22 { animation-delay: 4.4s; }
-        .delay-23 { animation-delay: 4.6s; }
     </style>
 </head>
 <body>
 
-    <div class="letter-timeline">
-        
-        <div class="text-bubble delay-1">
-            hola gigi tengo
-        </div>
+    <div class="cursor-trail" id="cursor"></div>
 
-        <div class="song-space delay-2">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/WP_jITzqB7M?si=QSpMWlVFRYcmaqa7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-
-        <div class="text-bubble delay-3">
-            esta es mi carta de disculpas por la vez en que me equivoque y me fui, lastimosamente
-        </div>
-
-        <div class="song-space delay-4">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/be-sT9W0i2A?si=Jy-DxBZJWzMNvuFV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-
-        <div class="text-bubble delay-5">
-            dios mio osea hasta ella se dio cuenta que
-        </div>
-
-        <div class="song-space delay-6">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/wHy39yG6lEE?si=MtYI95DRZUWQ9tK_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-
-        <div class="text-bubble delay-7">
-            sabes lo loco que es eso? tipo nunca te dije que
-        </div>
-
-        <div class="song-space delay-8">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/WqKqj3Q1wrw?si=B7Vjcueq9u6CqCaN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-
-        <div class="text-bubble delay-9">
-            aunque
-        </div>
-
-        <div class="song-space delay-10">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/NPpELzyP4rw?si=LROHl8gKGDR-7PKB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-
-        <div class="song-space delay-11">
-            </div>
-
-        <div class="text-bubble delay-12">
-            no me sienta tan
-        </div>
-
-        <div class="song-space delay-13">
-            </div>
-
-        <div class="text-bubble delay-14">
-            de igual forma te odio, me cagas tanto tanto pero tanto que no se como explicarte o decirte que
-        </div>
-
-        <div class="song-space delay-15">
-            </div>
-
-        <div class="text-bubble delay-16">
-            quiero dejar de ser tan
-        </div>
-
-        <div class="song-space delay-17">
-            </div>
-
-        <div class="text-bubble delay-18">
-            en tu vida, pero lastimosamente
-        </div>
-
-        <div class="song-space delay-19">
-            </div>
-
-        <div class="text-bubble delay-20">
-            tuvieron miedo de que
-        </div>
-
-        <div class="song-space delay-21">
-            </div>
-
-        <div class="text-bubble delay-22">
-            orbitaran juntas, pero al menos
-        </div>
-
-        <div class="song-space delay-23">
-            </div>
-
+    <div class="header-container">
+        <img src="axolote.png" alt="Axolote Galaxy" class="axolotl-logo">
+        <h1 class="header-title">una carta de un amor que ni yo entiendo</h1>
     </div>
 
+    <main class="letter-content">
+
+        <section class="letter-section">
+            <div class="text-block">
+                <p>Hola gigi, me siento medio loquito del centro haciendo una carta asi sabes? es raro pero antes que nada sabes que te odio cabronsisimo no? machin machin y aun asi tengo </p>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="video-block">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/WP_jITzqB7M?si=5LraxFU44EXpMG3e" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="text-block">
+                <p>Y eso es que aunque ya te lo dijera muchas veces aunque ya hablamos de eso siento que las palabras no son suficientes para pedir disculpas osea wey nmms no se si sepas pero fuiste bueno mas bien </p>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="video-block">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/WqKqj3Q1wrw?si=JBDIkt9C0k4pTpoh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="text-block">
+                <p>Me cuesta tanto decir eso que mejor pongo una cancion sabes? daaaah, es que soy top 3 genios de esta generacion, que miedo sonar bien onichan nmms pero tenia que hacer la "carta" por que </p>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="video-block">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/RR7mOicpAe4?si=OcS8WY3edSR1x-cz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="text-block">
+                <p>es raro como que desde que volvimos a hablar no se, es igual que antes pero no como  </p>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="video-block">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/7JNQUsVegcY?si=BABTtRbYEM_ZFMKa" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="text-block">
+                <p>No se si entiendas es que como te falla aveces pues, pero ya osea me desvio del tema y no quiero hacer mil bocetos tipo quiero decir la real sabes? a lo que me refiero es que ahora siento que estoy </p>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="video-block">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/ZU45FAshhwg?si=RGoxXEnyiTe7LO5t" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="text-block">
+                <p>no se si solo es por que</p>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="video-block">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/iUASF5h5G1w?si=Pp7QYHqwbh-cErCG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="text-block">
+                <p>Osea no tanto solo un poquito o por que simplemente</p>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="video-block">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/F4i3O7T488I?si=Exh1InSXa80OWr7s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="text-block">
+                <p>Simplemente no quiero estar</p>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="video-block">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/-GHvDpMZB3I?si=o7ojT6QaxaEK7sgy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="text-block">
+                <p>Me refiero a estar solo sin ti, no se wey ponte vergas al menos</p>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="video-block">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/qk-iLHtabpg?si=mnZlmKcqAhjzI4LR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="text-block">
+                <p>O como se llame tu rancho wey, igual si no pasa solo sera por que</p>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="video-block">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/LrS7nLEVES8?si=JFNkpQkOGBrfH4nB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="text-block">
+                <p>No quisieron ver juntas a</p>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="video-block">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/86EzBBQwloo?si=m2KmQH_AbAcdchnc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="text-block">
+                <p>Tan conectadas en un mismo planeta sabes? alch me vale verga si eso quieren por que igual</p>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="video-block">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/AJTEcfWZx-U?si=-nVwMS0cVm8KCmv1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="text-block">
+                <p>Iba a poner otra cosa aqui pero al final me dio penita y ash osea callate y escucha</p>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="video-block">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/5q-nZg1D_Ik?si=0LVu_wEDbnRh0B0y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="text-block">
+                <p>Luego me parece irreal que tengo amigos que mi familia ni topo para nada y tu osea todos te topan hasta tu familia ahora me topa que onda, medio inevitable por que</p>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="video-block">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/be-sT9W0i2A?si=srC39Vh9ix_nm_X3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="text-block">
+                <p>Se que no estoy expresandome tanto en el texto solo estoy hablando de no se, cosas que aja pero por esa justa razon me asegure de buscar canciones que digan lo que senti, siento y probablemente sentire despues sabes? todo lo que dicen son factos sabes?</p>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="video-block">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/A-95gA5RZaU?si=m67xXvx0fO2-HfcW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="text-block">
+                <p>Entiendas aunque sea un poco de lo mucho que te amo osea nmms wey captas que tu </p>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="video-block">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/etWdAXYy2Gc?si=YiYspUxXdrAnYFdz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="text-block">
+                <p>Tal vez tu ya</p>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="video-block">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/pq85VSFhi0c?si=DnmKm8wkoe4OaBak" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="text-block">
+                <p>pero igual queria dejar en claro que nuestras</p>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="video-block">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/GG_xNkiuWrU?si=oQ8Deb4KoB9e54PI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="text-block">
+                <p>Estan conectadas o al menos la mia</p>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="video-block">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/ZJoznujj3Lk?si=teadR4Z9TfoxLPNL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="text-block">
+                <p>Ahora y</p>
+            </div>
+        </section>
+
+        <section class="letter-section">
+            <div class="video-block">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/tGKCkLYIDdo?si=oh7QxJ8J5TSXIP6o" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const cursor = document.getElementById('cursor');
+        const sections = document.querySelectorAll('.letter-section');
+
+        // custom cursor trail effect
+        document.addEventListener('mousemove', e => {
+            cursor.style.top = e.clientY + 'px';
+            cursor.style.left = e.clientX + 'px';
+        });
+
+        // Intersection Observer for scroll animation (blocks fade in)
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
 </body>
 </html>
