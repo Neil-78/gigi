@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Para Gigi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Paleta y animaciones modernas */
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --text-color: #f4f4f9;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
+
+        /* Contenedor principal adaptado para móviles */
+        .letter-timeline {
+            width: 100%;
+            max-width: 450px; /* Perfecto para vista móvil */
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* Estilo de los bloques de texto (Efecto Cristal) */
+        .text-bubble {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 20px 25px;
+            font-size: 1.1rem;
+            font-weight: 300;
+            line-height: 1.5;
+            text-align: left;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            /* Animación de entrada */
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* Estilo de los espacios para las canciones */
+        .song-space {
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            /* Animación de entrada */
+            opacity: 0;
+            transform: scale(0.95);
+            animation: popIn 0.8s ease forwards;
+        }
+
+        /* Asegura que cualquier iframe que pegues se adapte al 100% del contenedor */
+        .song-space iframe {
+            width: 100%;
+            height: 180px; /* Altura ideal para reproductores en móvil */
+            border: none;
+            display: block;
+        }
+
+        /* --- KEYFRAMES PARA ANIMACIONES --- */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes popIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Retrasos escalonados para que los elementos aparezcan uno por uno suavemente */
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+        .delay-5 { animation-delay: 1.0s; }
+        .delay-6 { animation-delay: 1.2s; }
+        .delay-7 { animation-delay: 1.4s; }
+        .delay-8 { animation-delay: 1.6s; }
+        .delay-9 { animation-delay: 1.8s; }
+        .delay-10 { animation-delay: 2.0s; }
+        .delay-11 { animation-delay: 2.2s; }
+        .delay-12 { animation-delay: 2.4s; }
+        .delay-13 { animation-delay: 2.6s; }
+        .delay-14 { animation-delay: 2.8s; }
+        .delay-15 { animation-delay: 3.0s; }
+        .delay-16 { animation-delay: 3.2s; }
+        .delay-17 { animation-delay: 3.4s; }
+        .delay-18 { animation-delay: 3.6s; }
+        .delay-19 { animation-delay: 3.8s; }
+        .delay-20 { animation-delay: 4.0s; }
+        .delay-21 { animation-delay: 4.2s; }
+        .delay-22 { animation-delay: 4.4s; }
+        .delay-23 { animation-delay: 4.6s; }
+    </style>
+</head>
+<body>
+
+    <div class="letter-timeline">
+        
+        <div class="text-bubble delay-1">
+            hola gigi tengo
+        </div>
+
+        <div class="song-space delay-2">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/WP_jITzqB7M?si=QSpMWlVFRYcmaqa7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+
+        <div class="text-bubble delay-3">
+            esta es mi carta de disculpas por la vez en que me equivoque y me fui, lastimosamente
+        </div>
+
+        <div class="song-space delay-4">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/be-sT9W0i2A?si=Jy-DxBZJWzMNvuFV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+
+        <div class="text-bubble delay-5">
+            dios mio osea hasta ella se dio cuenta que
+        </div>
+
+        <div class="song-space delay-6">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/wHy39yG6lEE?si=MtYI95DRZUWQ9tK_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+
+        <div class="text-bubble delay-7">
+            sabes lo loco que es eso? tipo nunca te dije que
+        </div>
+
+        <div class="song-space delay-8">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/WqKqj3Q1wrw?si=B7Vjcueq9u6CqCaN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+
+        <div class="text-bubble delay-9">
+            aunque
+        </div>
+
+        <div class="song-space delay-10">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/NPpELzyP4rw?si=LROHl8gKGDR-7PKB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+
+        <div class="song-space delay-11">
+            </div>
+
+        <div class="text-bubble delay-12">
+            no me sienta tan
+        </div>
+
+        <div class="song-space delay-13">
+            </div>
+
+        <div class="text-bubble delay-14">
+            de igual forma te odio, me cagas tanto tanto pero tanto que no se como explicarte o decirte que
+        </div>
+
+        <div class="song-space delay-15">
+            </div>
+
+        <div class="text-bubble delay-16">
+            quiero dejar de ser tan
+        </div>
+
+        <div class="song-space delay-17">
+            </div>
+
+        <div class="text-bubble delay-18">
+            en tu vida, pero lastimosamente
+        </div>
+
+        <div class="song-space delay-19">
+            </div>
+
+        <div class="text-bubble delay-20">
+            tuvieron miedo de que
+        </div>
+
+        <div class="song-space delay-21">
+            </div>
+
+        <div class="text-bubble delay-22">
+            orbitaran juntas, pero al menos
+        </div>
+
+        <div class="song-space delay-23">
+            </div>
+
+    </div>
+
+</body>
+</html>
