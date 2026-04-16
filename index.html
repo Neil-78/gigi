@@ -22,6 +22,8 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        /* CORRECCIÓN: Fondo transparente en body para no tapar los fondos animados */
         html, body { 
             width: 100%; min-height: 100vh; overflow-x: hidden; 
             background-color: var(--g-bg-black); color: var(--g-text);
@@ -29,10 +31,11 @@
         }
         @media (pointer: fine) { * { cursor: none; } }
 
-        /* === FONDOS REESTRUCTURADOS === */
+        /* === FONDOS REESTRUCTURADOS Y VISIBLES === */
         .master-bg {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -2; pointer-events: none;
+            z-index: 0; /* CORRECCIÓN: Ahora están por encima de la pared opaca */
+            pointer-events: none;
         }
 
         #bg-galaxy {
@@ -88,7 +91,6 @@
             position: absolute; width: 100%; height: auto;
             transition: opacity 1s ease;
         }
-        /* Mix-blend-mode quita el fondo negro de la imagen jpg */
         .galaxy-logo { mix-blend-mode: lighten; filter: drop-shadow(0 0 10px rgba(255, 102, 179, 0.8)); animation: axolotlIntro 2.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;}
         .nature-logo { opacity: 0; filter: drop-shadow(0 0 12px rgba(209, 226, 201, 0.7)); transform: scale(0.9); transition: opacity 1.5s ease 0.5s, transform 1.5s ease 0.5s;}
 
